@@ -1,9 +1,11 @@
 from genericpath import exists
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def home(request):
     if request.method== 'POST':
@@ -46,9 +48,15 @@ def register(request):
     else:
 
      return render(request,'login/register.html')
+@login_required(login_url='/')
+def participnats(request):
+    participants=User.objects.all()
+    return render(request, 'admin/pages/participants.html',{'participant': participants})
 
+@login_required(login_url='/')
 def dashboard(request):
     return render(request,'admin/pages/dashboard.html')
+
 def logout_view(request):
     logout(request)
     return redirect("/")

@@ -1,0 +1,49 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Participnats</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+      <div class="card">
+          <div class="card-header"><b>All registered participnats</b></div>
+          <div class="card-body">
+            <table class="table table-condensed datatable">
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>   
+                    {% for users in participant %}
+                    <tr>
+                        <td>{{users.id}}</td>
+                        <td>{{users.first_name}}</td>
+                        <td>{{users.last_name}}</td>
+                        <td>{{users.email}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-success"><i class="bi bi-eye"></i></button>
+                               
+                              </div>
+                        </td>
+                      
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+      </div>
+
+</main>
+{% endblock content %}
