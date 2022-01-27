@@ -32,12 +32,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'adminpanel.apps.AdminpanelConfig'
 ]
 
 MIDDLEWARE = [
@@ -77,10 +79,18 @@ WSGI_APPLICATION = 'django_admin_panel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< Updated upstream
         'NAME':'jamestest',
         'USER':'postgres',
         'PASSWORD':'04742012a',
         'HOST':'localhost'
+=======
+        'NAME': 'jamestest',
+        'USER': 'postgres',
+        'PASSWORD': '04742012a',
+        'HOST': 'localhost',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+>>>>>>> Stashed changes
         # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
