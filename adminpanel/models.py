@@ -10,12 +10,15 @@ class Participants(models.Model):
     staff_initials = models.CharField(max_length=50)
 
 class Viralload(models.Model):
-    viral_id = models.IntegerField()
+    participants = models.ForeignKey(Participants,on_delete=models.CASCADE)
     date_collection =models.DateField()
     vl_results=models.CharField(max_length=50)
     date_received= models.DateField()
     date_entered = models.DateField()
     staff_initials = models.CharField(max_length=50)
+
+    def __str__(self):
+        return  self.participants
 
 class Rerand(models.Model):
     rerand_id =models.IntegerField()

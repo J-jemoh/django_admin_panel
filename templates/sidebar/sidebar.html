@@ -5,7 +5,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="{% url 'dashboard' %}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -17,7 +17,7 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{%  url 'participants' %}">
+            <a href="{%  url 'new_participants' %}">
               <i class="bi bi-circle"></i><span>All Participants</span>
             </a>
           </li>
@@ -26,12 +26,12 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="{% url 'highvl' %}">
           <i class="bi bi-journal-text"></i><span>High VL</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="forms-elements.html">
+            <a href="{% url 'highvl' %}">
               <i class="bi bi-circle"></i><span>All High VL</span>
             </a>
           </li>
@@ -93,7 +93,12 @@
           <span>MISSED VISIT</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link " href="{%  url 'participants' %}">
+          <i class="bi bi-grid"></i>
+          <span>Users</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
     </ul>
 

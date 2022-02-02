@@ -1,0 +1,94 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Viral Load Capture</li>
+          </ol>
+        </nav>
+      </div>
+      {% for messages in messages %}
+        <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
+        {% endfor %}   
+      <div class="card">
+          <div class="card-header">Viral load for {{participants.id}}</div>
+          <div class="card-body">
+            <div class="row">
+              <form class="row g-3" method="post" action="{% url 'viralload' participants.id %}">
+                {% csrf_token %}
+              <div class="col-md-6">
+
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label">Viral ID</label>
+                    <input type="text" class="form-control" id="inputName5" name="viral_id" required value="{{participants.id}}">
+                  </div>
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label"> Viral Load result</label>
+                    <input type="text" class="form-control" id="inputName5" name="vl_result" required>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label">Date of Collection</label>
+                    <input type="date" class="form-control" id="inputName5" name="date_collected" required>
+                  </div>
+                  
+                  
+               
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label"> Date received</label>
+                  <input type="date" class="form-control" id="inputName5" name="date_received" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Date Entered</label>
+                  <input type="date" class="form-control" id="inputName5" name="date_entered" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label"> Staff Initials</label>
+                  <input type="text" class="form-control" id="inputName5" name="staff_initials" required>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save Viral Load</button>
+              
+              </div>
+            </form>
+            </div>
+       
+          </div>
+      </div>
+      <div class="card">
+        <div class="card-header">VL results for {{participants.id}}</div>
+        <div class="card-body">
+          <table class="table datatable table-condensed">
+            <thead>
+              <tr>
+                <th>Participant ID</th>
+                <th>Viral Load results</th>
+                <th>Date Collected</th>
+                <th>Date Received</th>
+                <th>Date Entered</th>
+                <th>Staff Initials</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for viral_loads in viralloads %}
+              <tr>
+                <td>{{viral_loads.participants_id}}</td>
+                <td>{{viral_loads.vl_results}}</td>
+                <td>{{viral_loads.date_collection}}</td>
+               <td>{{viral_loads.date_received}}</td>
+                <td>{{viral_loads.date_entered}}</td>
+                <td>{{viral_loads.staff_initials}}</td>
+              </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+</main>
+{% endblock %}

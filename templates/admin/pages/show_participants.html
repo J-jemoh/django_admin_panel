@@ -1,0 +1,42 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'new_participants' %}">Participants</a></li>
+            <li class="breadcrumb-item active">{{participants.id}}</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3 ">
+                  <a class="btn btn-success text-white d-block" href="{% url 'viralload' participants.id %}"><b>Capture Viral Load</b></a>
+              </div>
+              <div class="col-md-3">
+                <a class="btn btn-success text-white d-block" href="#"><b>Edit Viral Load</b></a>
+              </div>
+          </div>
+      
+    </div>
+    <br>
+      <div class="card">
+          <div class="card-header"><b><h3>You are viewing participant {{participants.id}}</h3></b></div>
+          <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Participant id: <b>{{participants.participant_id}}</b></p>
+                    <p>Participant Age: <b>{{participants.age}}</b></p>
+                </div>
+                <div class="col-md-6">
+                    <p>Participant Gender: <b>{{participants.sex}}</b></p>
+                    <p>Date enrolled: <b>{{participants.enrollment_date}}</b></p>
+                </div>
+            </div>
+          </div>
+      </div>
+</main>
+{% endblock content %}

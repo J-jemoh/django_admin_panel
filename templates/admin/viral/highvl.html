@@ -1,0 +1,46 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">High Viral Load</li>
+          </ol>
+        </nav>
+      </div>
+  
+
+      <div class="card">
+        <div class="card-header">VL results for {{participants.id}}</div>
+        <div class="card-body">
+          <table class="table datatable table-condensed">
+            <thead>
+              <tr>
+                <th>Participant ID</th>
+                <th>Viral Load results</th>
+                <th>Date Collected</th>
+                <th>Date Received</th>
+                <th>Date Entered</th>
+                <th>Staff Initials</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for viral_load in vl_high %}
+              <tr>
+                <td>{{viral_load.participants_id}}</td>
+                <td>{{viral_load.vl_results}}</td>
+                <td>{{viral_load.date_collection}}</td>
+               <td>{{viral_load.date_received}}</td>
+                <td>{{viral_load.date_entered}}</td>
+                <td>{{viral_load.staff_initials}}</td>
+              </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+</main>
+{% endblock %}

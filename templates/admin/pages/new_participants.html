@@ -7,41 +7,43 @@
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Users</li>
+            <li class="breadcrumb-item active">Participants</li>
           </ol>
         </nav>
       </div><!-- End Page Title -->
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-4">
-            <a class="btn btn-success btn-block" href="{% url 'add-participants' %}">Add Users</a>
+            <a class="btn btn-success btn-block" href="{% url 'add-participants' %}">Add participant</a>
           </div>
         </div>
       </div>
       <br>
       <div class="card">
-          <div class="card-header"><b>All Active users</b></div>
+          <div class="card-header"><b>All registered participants</b></div>
           <div class="card-body">
             <table class="table table-condensed datatable">
                 <thead>
                     <tr>
                         <th>Serial No</th>
-                        <th>First name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
+                        <th>Participant ID</th>
+                        <th>Sex</th>
+                        <th>Age</th>
+                        <th>Date of Enrollment</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>   
-                    {% for users in participant %}
+                    {% for participants in user %}
                     <tr>
-                        <td>{{users.id}}</td>
-                        <td>{{users.first_name}}</td>
-                        <td>{{users.last_name}}</td>
-                        <td>{{users.email}}</td>
+                        <td>{{participants.id}}</td>
+                        <td>{{participants.participant_id}}</td>
+                        <td>{{participants.sex}}</td>
+                        <td>{{participants.age}}</td>
+                        <td>{{participants.enrollment_date}}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-success"><i class="bi bi-eye"></i></button>
+                                <a type="button" class="btn btn-success" href="{% url 'show_participants' participants.id %}"><i class="bi bi-eye"></i></a>
                                
                               </div>
                         </td>
