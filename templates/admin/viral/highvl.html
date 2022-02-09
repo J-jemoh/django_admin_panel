@@ -18,6 +18,7 @@
           <table class="table datatable table-condensed">
             <thead>
               <tr>
+                <th>Serial No</th>
                 <th>Participant ID</th>
                 <th>Viral Load results</th>
                 <th>Date Collected</th>
@@ -29,6 +30,7 @@
             <tbody>
             {% for viral_load in vl_high %}
               <tr>
+                <td>{{viral_load.id}}</td>
                 <td>{{viral_load.participants_id}}</td>
                 <td>{{viral_load.vl_results}}</td>
                 <td>{{viral_load.date_collection}}</td>
@@ -36,10 +38,10 @@
                 <td>{{viral_load.date_entered}}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
-                     <button type="button" class="btn btn-success"><i class="bi bi-eye"></i></button>      
+                     <a type="button" class="btn btn-success" href="{% url 'rerandview' viral_load.id %}"><i class="bi bi-eye"></i></a>      
                     </div>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-success"><i class="fa fa-trash" aria-hidden="true"></i></button>      
+                      <a type="button" class="btn btn-danger"><i class="bi bi-trash"></i></a>      
                      </div>
                 </td>
               </tr>

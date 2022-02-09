@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from adminpanel.models import Participants, Viralload
+from adminpanel.models import Participants, Viralload,Rerand,EOIC,VLMONTH6
 from django.db.models.functions import Cast
 from django.db.models import IntegerField
+from django.urls import reverse
 
 # Create your views here.
 def home(request):
@@ -119,3 +120,53 @@ def viralloads(request,id):
 def highvl(request):
     high_viralload=Viralload.objects.filter(vl_results__gt =1000)
     return render(request,'admin/viral/highvl.html',{'vl_high':high_viralload})
+def rerandview(request,id):
+    high_viralload=Viralload.objects.get(id=id)
+    if request.method=='POST':
+        viral_id =request.POST['viral_id']
+        p_id =request.POST['p_id']
+        rerand_date =request.POST['rerand_date']
+        vl_results =request.POST['vl_results']
+        rerand_arm =request.POST['rerand_arm']
+        staff_initials =request.POST['staff_initials']
+        if Rerand.objects.filter(participants_id=p_id).exists():
+            messages.info(request,'This participant has alredy been rerandomized')
+            return render(request,'admin/viral/view_viralload.html',{'viral_load':high_viralload})
+        else:
+
+            rerand_data=Rerand.objects.create(viralload_id=viral_id,participants_id=p_id,rerand_date=rerand_date,vl_results=vl_results
+            ,rerand_arm=rerand_arm,staff_initials=staff_initials)
+            rerand_data.save()
+            return redirect("all_rerand")
+
+    else:
+        return render(request,'admin/viral/view_viralload.html',{'viral_load':high_viralload})
+def all_rerand(request):
+    rerand=Rerand.objects.all()
+    return render(request,'admin/rerand/all_rerand.html',{'rerand':rerand})
+def month6(request,id):
+    rerand=Rerand.objects.get(id=id)
+    if request.method == 'POST':
+        rerand_id=request.POST['rerand_id']
+        pid=request.POST['pid']
+        collection_date=request.POST['collection_date']
+        vl_results=request.POST['vl_results']
+        vl_suppressed=request.POST['vl_suppressed']
+        r_date=request.POST['r_date']
+        sinitials=request.POST['sinitials']
+
+        if VLMONTH6.objects.filter(rerand_id=id).exists():
+            messages.warning(request,'Month 6 post rerandomization for this participant has already been done.')
+            return render(request,'admin/month6/index.html',{'rerand':rerand})
+
+        else:
+            vlmonth6=VLMONTH6.objects.create(rerand_id=rerand_id,participants_id=pid,collection_date=collection_date
+            ,vl_result=vl_results,date_received=r_date,staff_initials=sinitials,vl_suppressed=vl_suppressed)
+            vlmonth6.save()
+            messages.success(request, 'Month 6 post rerandomization has been captured successfully')
+            return redirect("all_month6")
+    else:
+        return render(request,'admin/month6/index.html',{'rerand':rerand})
+def allmonth6(request):
+    month6=VLMONTH6.objects.all()
+    return render(request,'admin/month6/all_month6.html',{'month6':month6})

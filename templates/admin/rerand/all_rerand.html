@@ -1,0 +1,52 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="#">All rerands</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card">
+          <div class="card-header"><b>All Rerands</b></div>
+          <div class="card-body">
+              <table class="table table-condensed datatable">
+                <thead>
+                    <tr>
+                        <th>Serial No</th>
+                        <th>Participant Id</th>
+                        <th>Viral Load results</th>
+                        <th>Rerand Date</th>
+                        <th>Rerand Arm</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rerands in rerand %}
+                    <tr>
+                        <td>{{rerands.id}}</td>
+                        <td>{{rerands.participants_id}}</td>
+                        <td>{{rerands.vl_results}}</td>
+                        <td>{{rerands.rerand_date}}</td>
+                        <td>{{rerands.rerand_arm}}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a type="button" class="btn btn-success" href="{% url 'eoic_participant' rerands.id %}">Month6</a>
+                               
+                              </div>
+                              <div class="btn-group" role="group" aria-label="Basic example">
+                                <a type="button" class="btn btn-danger" href="#"><i class="bi bi-trash"></i></a>
+                               
+                              </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+      </div>
+</main>
+{% endblock %}

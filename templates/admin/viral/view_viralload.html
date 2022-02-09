@@ -1,0 +1,68 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'highvl' %}">Viral loads</a></li>
+            <li class="breadcrumb-item active">{{viral_load.id}}</li>
+          </ol>
+        </nav>
+      </div>
+      {% for messages in messages %}
+        <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
+        {% endfor %} 
+      <div class="card">
+          <div class="card-header"><b>Capture Rerand for participant {{viral_load.participants_id}}</b></div>
+          <div class="card-body">
+              <form method="post" action="#">
+                  {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Viral Load ID</label>
+                            <input type="text" class="form-control border-success" id="inputName5" name="viral_id" value="{{viral_load.id}}" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Participant ID</label>
+                            <input type="text" class="form-control border-success" id="inputName5" name="p_id" value="{{viral_load.participants_id}}" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Rerand Date</label>
+                            <input type="date" class="form-control border-success" id="inputName5" name="rerand_date"  required>
+                          </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Viral load results</label>
+                            <input type="text" class="form-control border-success" id="inputName5" name="vl_results" value="{{viral_load.vl_results}}"  required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Rerand Arm</label>
+                            <input type="text" class="form-control border-success" id="inputName5" name="rerand_arm"   required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Staff Initials</label>
+                            <input type="text" class="form-control border-success" id="inputName5" name="staff_initials"   required>
+                          </div>
+                          <br>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Rerand Details</button>
+                      
+                      </div>
+                </div>
+              </form>
+
+          </div>
+      </div>
+</main>
+
+{% endblock %}

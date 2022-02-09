@@ -1,0 +1,53 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="#">Month 6</a></li>
+            <li class="breadcrumb-item active"><a href="#">All</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card">
+      <div class="card-header"><b>All month 6 Participants</b></div>
+      <div class="card-body">
+        <table class="table datatable">
+          <thead>
+            <tr>
+              <th>Serial No</th>
+              <th>Participant ID</th>
+              <th>Date of Collection</th>
+              <th>VL Results</th>
+              <th>Date Received</th>
+              <th>VL suppressed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for months in month6%}
+            <tr>
+              <td>{{months.id}}</td>
+              <td>{{months.participants_id}}</td>
+              <td>{{months.collection_date}}</td>
+              <td>{{months.vl_result}}</td>
+              <td>{{months.date_received}}</td>
+              <td>
+                  {% if months.vl_suppressed == 1 %}
+                  <span class="badge bg-success">yes</span>
+                  {% else %}
+                  <span class="badge bg-danger">No</span>
+                  {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      </div>
+    </main>
+    
+
+    {% endblock %}

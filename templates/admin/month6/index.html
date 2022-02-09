@@ -1,0 +1,79 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="#">EOIC</a></li>
+            <li class="breadcrumb-item active"><a href="#">Rerand</a></li>
+            <li class="breadcrumb-item active"><a href="#">Participant</a></li>
+            <li class="breadcrumb-item active"><a href="#">{{rerand.participants_id}}</a></li>
+          </ol>
+        </nav>
+      </div>
+      {% for messages in messages %}
+        <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
+        {% endfor %}  
+      <div class="card">
+          <div class="card-header"><b>Update Month 6 post rerand for participant : <i>{{rerand.participants_id}}</i></b></div>
+          <div class="card-body">
+              <form method="post" action="#">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Rerand ID</label>
+                            <input type="text" class="form-control border-secondary" id="inputName5" name="rerand_id" value="{{rerand.id}}" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Participant ID</label>
+                            <input type="text" class="form-control border-secondary" id="inputName5" name="pid" value="{{rerand.participants_id}}" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Date of collection</label>
+                            <input type="date" class="form-control border-secondary" id="inputName5" name="collection_date" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Staff Initials</label>
+                            <input type="text" class="form-control border-secondary" id="inputName5" name="sinitials" required>
+                          </div>
+                          <br>
+                          <br>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Viral_load result</label>
+                            <input type="text" class="form-control border-secondary" id="inputName5" name="vl_results" required>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">VL suppressed</label>
+                            <select name="vl_suppressed" class="form-control">
+                                <option>....</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                            </select>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <label for="inputName5" class="form-label">Date VL received</label>
+                            <input type="date" class="form-control border-secondary" id="inputName5" name="r_date" required>
+                          </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save Month 6 Data</button>
+                      
+                      </div>
+                </div>
+
+              </form>
+          </div>
+      </div>
+
+</main>
+{% endblock %}
