@@ -12,13 +12,12 @@ class Participants(models.Model):
 class Viralload(models.Model):
     participants = models.ForeignKey(Participants,on_delete=models.CASCADE)
     date_collection =models.DateField()
-    vl_results=models.CharField(max_length=50)
+    vl_captured =models.IntegerField(default=1)
+    vl_results=models.IntegerField()
     date_received= models.DateField()
     date_entered = models.DateField()
     staff_initials = models.CharField(max_length=50)
 
-    def __str__(self):
-        return  self.participants
 
 class Rerand(models.Model):
     rerand_id =models.IntegerField()

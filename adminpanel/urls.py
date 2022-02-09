@@ -14,5 +14,5 @@ path('dashboard/participants/add',views.new_participants,name="add-participants"
 path('dashboard/partipicipants/all',views.all_participants,name="new_participants"),
 path('dashboard/participant/<int:id>',views.view_participant, name="show_participants"),
 path('dashboard/participant/viral_load/<int:id>',views.viralloads,name="viralload"),
-path('dashboard/participants/high_vl',views.highvl,name="highvl")
+path('dashboard/participants/high_viral_loads',views.highvl,name="highvl")
 ]

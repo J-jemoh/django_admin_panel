@@ -16,15 +16,33 @@
       <div class="card">
           <div class="card-header">Viral load for {{participants.id}}</div>
           <div class="card-body">
-            <div class="row">
+           
               <form class="row g-3" method="post" action="{% url 'viralload' participants.id %}">
                 {% csrf_token %}
+              <div class="row">
               <div class="col-md-6">
 
                   <div class="col-md-12">
-                    <label for="inputName5" class="form-label">Viral ID</label>
+                    <label for="inputName5" class="form-label">Participant Id</label>
                     <input type="text" class="form-control" id="inputName5" name="viral_id" required value="{{participants.id}}">
                   </div>
+ 
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Has Viral Load</label>
+                  <select name="has_vl" class="form-control" onchange="display_vl_result('vlresult',this)">
+                    <option>....</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
+                </div> 
+                
+              </div>
+            </div>
+            <div class="container" id="vlresult" style="display: none;">
+              <div class="row">
+                <div class="col-md-6">
                   <div class="col-md-12">
                     <label for="inputName5" class="form-label"> Viral Load result</label>
                     <input type="text" class="form-control" id="inputName5" name="vl_result" required>
@@ -33,31 +51,30 @@
                     <label for="inputName5" class="form-label">Date of Collection</label>
                     <input type="date" class="form-control" id="inputName5" name="date_collected" required>
                   </div>
-                  
-                  
-               
-              </div>
-              <div class="col-md-6">
-                <div class="col-md-12">
-                  <label for="inputName5" class="form-label"> Date received</label>
-                  <input type="date" class="form-control" id="inputName5" name="date_received" required>
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label"> Staff Initials</label>
+                    <input type="text" class="form-control" id="inputName5" name="staff_initials" required>
+                  </div>
                 </div>
-                <div class="col-md-12">
-                  <label for="inputName5" class="form-label">Date Entered</label>
-                  <input type="date" class="form-control" id="inputName5" name="date_entered" required>
-                </div>
-                <div class="col-md-12">
-                  <label for="inputName5" class="form-label"> Staff Initials</label>
-                  <input type="text" class="form-control" id="inputName5" name="staff_initials" required>
+                <div class="col-md-6">
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label"> Date received</label>
+                    <input type="date" class="form-control" id="inputName5" name="date_received" required>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="inputName5" class="form-label">Date Entered</label>
+                    <input type="date" class="form-control" id="inputName5" name="date_entered" required>
+                  </div>
                 </div>
               </div>
+            </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-primary">Save Viral Load</button>
               
               </div>
-            </form>
-            </div>
-       
+            
+           
+          </form>
           </div>
       </div>
       <div class="card">
@@ -91,4 +108,9 @@
       </div>
 
 </main>
+<script>
+  function display_vl_result(id, elementValue) {
+    document.getElementById(id).style.display = elementValue.value == 1 ? 'block' : 'none';
+  }
+</script>
 {% endblock %}

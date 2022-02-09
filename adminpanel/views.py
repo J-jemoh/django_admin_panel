@@ -1,13 +1,15 @@
 from genericpath import exists
 from operator import gt
 from django.contrib import messages
+from django.forms import IntegerField
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from adminpanel.models import Participants, Viralload
-
+from django.db.models.functions import Cast
+from django.db.models import IntegerField
 
 # Create your views here.
 def home(request):
@@ -99,12 +101,13 @@ def viralloads(request,id):
     vl_loads=Viralload.objects.filter(participants_id = users)
     if request.method == 'POST':
         viral_id = request.POST['viral_id']
+        has_vl = request.POST['has_vl']
         vl_result = request.POST['vl_result']
         date_collected = request.POST['date_collected']
         date_received = request.POST['date_received']
         date_entered = request.POST['date_entered']
         staff_initials = request.POST['staff_initials']
-        viralloads= Viralload.objects.create(participants_id=viral_id,date_collection=date_collected,vl_results=vl_result,date_received=date_received
+        viralloads= Viralload.objects.create(participants_id=viral_id,vl_captured= has_vl,date_collection=date_collected,vl_results=vl_result,date_received=date_received
         ,date_entered=date_entered, staff_initials=staff_initials)
         viralloads.save()
         messages.success(request,'Viral load captured successfully')
@@ -114,5 +117,5 @@ def viralloads(request,id):
         return render(request,'admin/viral/viralload.html',{'participants': users,'viralloads':vl_loads})
 
 def highvl(request):
-    high_vl=Viralload.objects.filter(vl_results__gt = int(1000))
-    return render(request,'admin/viral/highvl.html',{'vl_high':high_vl})
+    high_viralload=Viralload.objects.filter(vl_results__gt =1000)
+    return render(request,'admin/viral/highvl.html',{'vl_high':high_viralload})
