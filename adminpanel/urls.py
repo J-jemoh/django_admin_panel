@@ -19,4 +19,7 @@ path('dashboard/participants/high_viral_loads/<int:id>',views.rerandview,name="r
 path('dashboard/participants/rerands/all',views.all_rerand,name="all_rerand"),
 path('dashboard/participants/rerand/all/<int:id>',views.month6,name="eoic_participant"),
 path('dashboard/participants/month6/all',views.allmonth6,name="all_month6"),
+path('dashboard/participants/eoic/all',views.extended_outcome,name="all_eoic"),
+path('dashboard/participants/eoic/participant/<int:id>',views.eoic_participants,name="eoic_id"),
+path('dashboard/participants/eoic/participant/all/done_eoic',views.done_eoic,name="done_eoic"),
 ]

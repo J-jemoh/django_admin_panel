@@ -11,6 +11,7 @@ from adminpanel.models import Participants, Viralload,Rerand,EOIC,VLMONTH6
 from django.db.models.functions import Cast
 from django.db.models import IntegerField
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -62,8 +63,10 @@ def participnats(request):
 @login_required(login_url='/')
 def dashboard(request):
     total_user = Participants.objects.count()
+    total_eoic = EOIC.objects.count()
+    total_rerand=Rerand.objects.count()
     users=User.objects.all()
-    return render(request,'admin/pages/dashboard.html',{'total_participants':total_user,'user':users})
+    return render(request,'admin/pages/dashboard.html',{'total_participants':total_user,'user':users,'total_eoic':total_eoic,'total_rerand':total_rerand})
 
 def logout_view(request):
     logout(request)
@@ -116,10 +119,11 @@ def viralloads(request,id):
     else:
 
         return render(request,'admin/viral/viralload.html',{'participants': users,'viralloads':vl_loads})
-
+@login_required(login_url='/')
 def highvl(request):
     high_viralload=Viralload.objects.filter(vl_results__gt =1000)
     return render(request,'admin/viral/highvl.html',{'vl_high':high_viralload})
+@login_required(login_url='/')
 def rerandview(request,id):
     high_viralload=Viralload.objects.get(id=id)
     if request.method=='POST':
@@ -141,9 +145,11 @@ def rerandview(request,id):
 
     else:
         return render(request,'admin/viral/view_viralload.html',{'viral_load':high_viralload})
+@login_required(login_url='/')
 def all_rerand(request):
     rerand=Rerand.objects.all()
     return render(request,'admin/rerand/all_rerand.html',{'rerand':rerand})
+@login_required(login_url='/')
 def month6(request,id):
     rerand=Rerand.objects.get(id=id)
     if request.method == 'POST':
@@ -167,6 +173,36 @@ def month6(request,id):
             return redirect("all_month6")
     else:
         return render(request,'admin/month6/index.html',{'rerand':rerand})
+@login_required(login_url='/')
 def allmonth6(request):
     month6=VLMONTH6.objects.all()
     return render(request,'admin/month6/all_month6.html',{'month6':month6})
+@login_required(login_url='/')
+def extended_outcome(request):
+    viralload_id=Viralload.objects.values('participants_id')
+    participants =Participants.objects.exclude(participant_id__in=viralload_id)
+    return render(request,'admin/eoic/eoic.html',{'participant':participants})
+@login_required(login_url='/')
+def eoic_participants(request,id):
+    participants_eoic= Participants.objects.get(id=id)
+    if request.method =='POST':
+        pid=request.POST['pid']
+        vl_result=request.POST['vl_result']
+        s_initials=request.POST['s_initials']
+        i_date=request.POST['i_date']
+        e_date=request.POST['e_date']
+        if EOIC.objects.filter(eoic_id=id).exists():
+            messages.warning(request,'EOIC has already been conducted for this participant.')
+            return render(request,'admin/eoic/eoic_add.html',{'participants':participants_eoic})
+        else:
+            eoic_save= EOIC.objects.create(eoic_id=pid,vl_result=vl_result,investigation_date=i_date,entry_date=e_date,
+                staff_initials=s_initials)
+            eoic_save.save()
+            messages.info(request,'Participants EOIC has been captured successfully.')
+            return render(request,'admin/eoic/eoic_add.html',{'participants':participants_eoic})
+    else:
+        return render(request,'admin/eoic/eoic_add.html',{'participants':participants_eoic})
+@login_required(login_url='/')
+def done_eoic(request):
+    eoic_part=EOIC.objects.all()
+    return render(request,'admin/eoic/done_eoic.html',{'eoic_part':eoic_part})

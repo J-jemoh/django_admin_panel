@@ -1,0 +1,41 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+	 <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="#">Done EOIC</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card">
+      	<div class="card-header"><b>Done EOIC participants</b></div>
+      	<div class="card-body">
+      		<table class="table datatable">
+      			<thead>
+      				<tr>
+      					<th>#</th>
+      					<th>Participant ID</th>
+      					<th>VL results</th>
+      					<th>Investigation Date</th>
+      					<th>Entry Date</th>
+      				</tr>
+      			</thead>
+      			<tbody>
+      				{% for eoic in eoic_part %}
+      				<tr>
+      					<td>{{eoic.id}}</td>
+      					<td>{{eoic.eoic_id}}</td>
+      					<td>{{eoic.vl_result}}</td>
+      					<td>{{eoic.investigation_date}}</td>
+      					<td>{{eoic.entry_date}}</td>
+      				</tr>
+      				{% endfor %}
+      			</tbody>
+      		</table>
+      	</div>
+      </div>
+</main>
+{%  endblock %}

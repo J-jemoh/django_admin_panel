@@ -1,0 +1,53 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+ <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="#">All EOIC</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="card">
+      	<div class="card-header">All participants due Extended Outcome</div>
+      	<div class="card-body">
+      		<table class="table datatable">
+      			<thead>
+      				<tr>
+      					<th>#</th>
+      					<th>Participant ID</th>
+      					<th>Date enrolled</th>
+      					<th>Sex</th>
+      					<th>Action</th>
+      				</tr>
+      			</thead>
+      			<tbody>
+      				{% for viraloads in participant %}
+      				<tr>
+      					<td>{{viraloads.id}}</td>
+      					<td>{{viraloads.participant_id}}</td>
+      					<td>{{viraloads.enrollment_date}}</td>
+      					<td>{{viraloads.sex}}</td>
+      					<td>
+      						<div class="btn-group" role="group" aria-label="Basic example">
+                                <a type="button" class="btn btn-success btn-sm" href="{% url 'eoic_id' viraloads.id %}"><i>EOIC</i></a>
+                               
+                              </div>
+                              <div class="btn-group" role="group" aria-label="Basic example">
+                                <a type="button" class="btn btn-danger" href="#"><i class="bi bi-trash"></i></a>
+                               
+                              </div>
+      					</td>
+      						
+      				</tr>
+      			
+      				{% endfor %}
+      			</tbody>
+      			
+      		</table>
+      	</div>
+      </div>
+</main>
+{% endblock %}
