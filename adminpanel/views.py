@@ -103,10 +103,16 @@ def edit_participant(request,id):
         psex = request.POST['psex']
         enrol_date = request.POST['enrol_date']
         s_initials = request.POST['s_initials']
-        Participants.objects.filter(id=id).update(participant_id=pid,sex=psex,age=age,enrollment_date=enrol_date,staff_initials=s_initials)
-        messages.info(request,'Participant updated successfully')
-        return redirect("new_participants")
-    else: 
+
+        if Participants.objects.filter(participant_id=pid).exists():
+            messages.info(request,'particiant ID already exists.Kindly check your ID and try again.')
+            return render(request,'admin/pages/edit_participant.html',{'participants': users})
+            
+        else: 
+            Participants.objects.filter(id=id).update(participant_id=pid,sex=psex,age=age,enrollment_date=enrol_date,staff_initials=s_initials)
+            messages.info(request,'Participant updated successfully')
+            return redirect("new_participants")
+    else:
         return render(request,'admin/pages/edit_participant.html',{'participants': users})
 
 @login_required(login_url='/')
