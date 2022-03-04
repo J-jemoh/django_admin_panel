@@ -94,6 +94,26 @@ def new_participants(request):
 
     else:
         return render(request,'admin/pages/add_participant.html')
+@login_required(login_url='/')
+def edit_participant(request,id):
+    users = Participants.objects.get(id=id)
+    if request.method =='POST':
+        pid = request.POST['pid']
+        age = request.POST['age']
+        psex = request.POST['psex']
+        enrol_date = request.POST['enrol_date']
+        s_initials = request.POST['s_initials']
+        Participants.objects.filter(id=id).update(participant_id=pid,sex=psex,age=age,enrollment_date=enrol_date,staff_initials=s_initials)
+        messages.info(request,'Participant updated successfully')
+        return redirect("new_participants")
+    else: 
+        return render(request,'admin/pages/edit_participant.html',{'participants': users})
+
+@login_required(login_url='/')
+def delete_participant(request,id):
+    users= Participants.objects.get(id=id).delete()
+    messages.info(request,'Participant has been deleted successfully.')
+    return redirect("new_participants")
 def all_participants(request):
     users =Participants.objects.all()
     return render(request,'admin/pages/new_participants.html',{'user':users})

@@ -44,8 +44,9 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a type="button" class="btn btn-success" href="{% url 'show_participants' participants.id %}"><i class="bi bi-eye"></i></a>
-                               
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#basicModal-{{participants.id}}"><i class="bi bi-trash"></i></button>
                               </div>
+                              {% include "admin/pages/participant_modal.html" %}
                         </td>
                       
                     </tr>
@@ -54,6 +55,10 @@
             </table>
           </div>
       </div>
-
+     
+        {% for messages in messages %}
+        <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
+        {% endfor %}    
+     
 </main>
 {% endblock content %}

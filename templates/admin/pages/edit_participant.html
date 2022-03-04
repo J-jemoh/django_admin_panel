@@ -1,0 +1,58 @@
+{% extends 'layout/main.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Edit participant/{{participants.participant_id}}</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+      
+        {% for messages in messages %}
+        <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
+        {% endfor %}    
+      
+      <div class="card">
+          <div class="card-header"><b>Edit participant</b></div>
+         
+          <div class="card-body">
+            <form class="row g-3" method="post" action="{% url 'edit_participant' participants.id %}">
+                {% csrf_token %}
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Participant ID</label>
+                  <input type="text" class="form-control" id="inputName5" name="pid" required value="{{participants.participant_id}}">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputEmail5" class="form-label">Participant Age</label>
+                  <input type="number" class="form-control" id="inputEmail5" name="age" required value="{{participants.age}}">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">Participant sex</label>
+                  <select name="psex" class="form-control" required>
+                    <option>Choose..</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress5" class="form-label">Date of Enrollment</label>
+                  <input type="date" class="form-control" id="inputAddres5s" placeholder="" required name="enrol_date" value="{{participants.enrollment_date|date:'Y-m-d' }}">
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress2" class="form-label">Staff Initials</label>
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="WNO" required  name="s_initials"  value="{{participants.staff_initials}}">
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Update Participant </button>
+                
+                </div>
+              </form><!-- End Multi Columns Form -->
+          </div>
+      </div>
+</main>
+
+{% endblock content %}
