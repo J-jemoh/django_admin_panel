@@ -7,55 +7,55 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Dashboard</a></li>
             <li class="breadcrumb-item active"><a href="{% url 'highvl' %}">Viral loads</a></li>
-            <li class="breadcrumb-item active">{{rerand.id}}</li>
+            <li class="breadcrumb-item active">{{rerands.id}}</li>
           </ol>
         </nav>
       </div>
-      {% for messages in messages %}
+      <!-- {% for messages in messages %}
         <div class=" card card-body bg-success text-white"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{messages}}</div>
-        {% endfor %} 
+        {% endfor %}  -->
       <div class="card">
-          <div class="card-header"><b>Capture Rerand for participant {{viral_load.participants_id}}</b></div>
+          <div class="card-header"><b>Update Rerand for participant {{rerands.participants_id}}</b></div>
           <div class="card-body">
-              <form method="post" action="#">
+              <form method="post" action="{% url 'edit_rerand' rerands.id %}">
                   {% csrf_token %}
                 <div class="row">
                     <div class="col-md-6">
                         <div class="col-md-12">
                             <label for="inputName5" class="form-label">Viral Load ID</label>
-                            <input type="text" class="form-control border-success" id="inputName5" name="viral_id" value="{{viral_load.id}}" required>
+                            <input type="text" class="form-control border-success" id="inputName5" name="viral_id" value="{{rerands.id}}" required>
                           </div>
                           <br>
                           <div class="col-md-12">
                             <label for="inputName5" class="form-label">Participant ID</label>
-                            <input type="text" class="form-control border-success" id="inputName5" name="p_id" value="{{viral_load.participants_id}}" required>
+                            <input type="text" class="form-control border-success" id="inputName5" name="p_id" value="{{rerands.participants_id}}" required>
                           </div>
                           <br>
                           <div class="col-md-12">
                             <label for="inputName5" class="form-label">Rerand Date</label>
-                            <input type="date" class="form-control border-success" id="inputName5" name="rerand_date"  required>
+                            <input type="date" class="form-control border-success" id="inputName5" name="rerand_date" value="{{rerands.rerand_date|date:'Y-m-d' }}"  required>
                           </div>
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12">
                             <label for="inputName5" class="form-label">Viral load results</label>
-                            <input type="text" class="form-control border-success" id="inputName5" name="vl_results" value="{{viral_load.vl_results}}"  required>
+                            <input type="text" class="form-control border-success" id="inputName5" name="vl_results" value="{{rerands.vl_results}}"  required>
                           </div>
                           <br>
                           <div class="col-md-12">
                             <label for="inputName5" class="form-label">Rerand Arm</label>
-                            <input type="text" class="form-control border-success" id="inputName5" name="rerand_arm"   required>
+                            <input type="text" class="form-control border-success" id="inputName5" name="rerand_arm" value="{{rerands.rerand_arm}}"   required>
                           </div>
                           <br>
                           <div class="col-md-12">
                             <label for="inputName5" class="form-label">Staff Initials</label>
-                            <input type="text" class="form-control border-success" id="inputName5" name="staff_initials"   required>
+                            <input type="text" class="form-control border-success" id="inputName5" name="staff_initials" value="{{rerands.staff_initials}}"   required>
                           </div>
                           <br>
                     </div>
                     
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Save Rerand Details</button>
+                        <button type="submit" class="btn btn-primary">Update Details</button>
                       
                       </div>
                 </div>

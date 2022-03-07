@@ -206,7 +206,9 @@ def allmonth6(request):
 @login_required(login_url='/')
 def extended_outcome(request):
     viralload_id=Viralload.objects.values('participants_id')
+    eoic=EOIC.objects.values('eoic_id')
     participants =Participants.objects.exclude(participant_id__in=viralload_id)
+    participants=Participants.objects.exclude(participant_id__in=eoic)
     return render(request,'admin/eoic/eoic.html',{'participant':participants})
 @login_required(login_url='/')
 def eoic_participants(request,id):
@@ -232,3 +234,71 @@ def eoic_participants(request,id):
 def done_eoic(request):
     eoic_part=EOIC.objects.all()
     return render(request,'admin/eoic/done_eoic.html',{'eoic_part':eoic_part})
+@login_required(login_url='/')
+def edit_vl(request,id):
+    rerand=Viralload.objects.get(id=id)
+    return render(request,'admin/viral/edit_vl.html',{'viral_load':rerand})
+@login_required(login_url='/')
+def edit_rerand(request,id):
+    rerand=Rerand.objects.get(id=id)
+    if request.method=='POST':
+        viral_id =request.POST['viral_id']
+        p_id =request.POST['p_id']
+        rerand_date =request.POST['rerand_date']
+        vl_results =request.POST['vl_results']
+        rerand_arm =request.POST['rerand_arm']
+        staff_initials =request.POST['staff_initials']
+        
+        Rerand.objects.filter(id=id).update(viralload_id=viral_id,participants_id=p_id,rerand_date=rerand_date,vl_results=vl_results
+        ,rerand_arm=rerand_arm,staff_initials=staff_initials)
+        messages.info(request, 'Participant rerand details have been successfully edited')
+        return redirect("all_rerand")
+    else:
+     return render(request,'admin/rerand/edit_rerand.html',{'rerands':rerand})
+@login_required(login_url='/')
+def delete_rerand(request,id):
+    Rerand.objects.get(id=id).delete()
+    messages.info(request,"Rerand details deleted successfully")
+    return redirect("all_rerand")
+@login_required(login_url='/')
+def edit_month6(request,id):
+    month6=VLMONTH6.objects.get(id=id)
+    if request.method == 'POST':
+        rerand_id=request.POST['rerand_id']
+        pid=request.POST['pid']
+        collection_date=request.POST['collection_date']
+        vl_results=request.POST['vl_results']
+        vl_suppressed=request.POST['vl_suppressed']
+        r_date=request.POST['r_date']
+        sinitials=request.POST['sinitials']
+
+        VLMONTH6.objects.filter(id=id).update(rerand_id=rerand_id,participants_id=pid,collection_date=collection_date
+        ,vl_result=vl_results,date_received=r_date,staff_initials=sinitials,vl_suppressed=vl_suppressed)
+        messages.success(request, 'Month 6 details for this participant has been updated successfully')
+        return redirect("all_month6")
+    else: 
+        return render(request,"admin/month6/edit_month6.html",{'months':month6})
+@login_required(login_url='/')
+def delete_month6(request,id):
+    VLMONTH6.objects.get(id=id).delete()
+    messages.info(request,'Month 6 details for thi participant has been deleted successfully')
+    return redirect("all_month6")
+def edit_eoic(request,id):
+    eoic=EOIC.objects.get(id=id)
+    if request.method =='POST':
+        pid=request.POST['pid']
+        vl_result=request.POST['vl_result']
+        s_initials=request.POST['s_initials']
+        i_date=request.POST['i_date']
+        e_date=request.POST['e_date']
+
+        EOIC.objects.filter(id=id).update(eoic_id=pid,vl_result=vl_result,investigation_date=i_date,entry_date=e_date,
+                staff_initials=s_initials)
+        messages.info(request,'Participants EOIC has been updated successfully.')
+        return redirect("done_eoic")
+    else:
+        return render(request,'admin/eoic/edit_eoic.html',{'eoic':eoic})
+def delete_eoic(request,id):
+    EOIC.objects.get(id=id).delete()
+    messages.info(request, "Participant has been deleted successfully.")
+    return redirect("done_eoic")
